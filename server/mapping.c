@@ -594,6 +594,7 @@ static unsigned int get_image_params( struct mapping *mapping, file_pos_t file_s
     switch (nt.opt.hdr32.Magic)
     {
     case IMAGE_NT_OPTIONAL_HDR32_MAGIC:
+#if 0
         switch (nt.FileHeader.Machine)
         {
         case IMAGE_FILE_MACHINE_I386:
@@ -614,6 +615,7 @@ static unsigned int get_image_params( struct mapping *mapping, file_pos_t file_s
         clr_size = nt.opt.hdr32.DataDirectory[IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR].Size;
 
         mapping->image.base           = nt.opt.hdr32.ImageBase;
+#endif
         mapping->image.entry_point    = nt.opt.hdr32.ImageBase + nt.opt.hdr32.AddressOfEntryPoint;
         mapping->image.map_size       = ROUND_SIZE( nt.opt.hdr32.SizeOfImage );
         mapping->image.stack_size     = nt.opt.hdr32.SizeOfStackReserve;
@@ -637,6 +639,7 @@ static unsigned int get_image_params( struct mapping *mapping, file_pos_t file_s
 
     case IMAGE_NT_OPTIONAL_HDR64_MAGIC:
         if (!(cpu_mask & CPU_64BIT_MASK)) return STATUS_INVALID_IMAGE_WIN_64;
+#if 0
         switch (nt.FileHeader.Machine)
         {
         case IMAGE_FILE_MACHINE_AMD64:
@@ -648,6 +651,7 @@ static unsigned int get_image_params( struct mapping *mapping, file_pos_t file_s
         default:
             return STATUS_INVALID_IMAGE_FORMAT;
         }
+#endif
         clr_va = nt.opt.hdr64.DataDirectory[IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR].VirtualAddress;
         clr_size = nt.opt.hdr64.DataDirectory[IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR].Size;
 
